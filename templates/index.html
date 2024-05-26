@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de inicio</title>
+</head>
+<body>
+    <h1>Bienvenido a la aplicación de gestión de usuarios</h1>
+    <ul>
+        <li><a href="{{ url_for('agregar_usuario') }}">Agregar Usuario</a></li>
+        <li><a href="{{ url_for('consultar_usuario') }}">Consultar Usuario</a></li>
+        <li><a href="{{ url_for('eliminar_usuario') }}">Eliminar Usuario</a></li>
+        <li><a href="{{ url_for('agregar_declaracion') }}">Agregar Declaracion</a></li>
+    </ul>
+</body>
+</html>
