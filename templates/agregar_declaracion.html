@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <h1>Bienvenido a tu declaración de renta</h1>
-        <form action="{{ url_for('registrar_renta') }}" method="post">
+        <form action="{{ url_for('agregar_declaracion') }}" method="post">
             <label for="id_usuario">ID Retención</label>
             <input type="text" id="id_usuario" name="id_usuario" value="{{ id_usuario }}" readonly required>
 

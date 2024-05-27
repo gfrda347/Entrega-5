@@ -37,7 +37,41 @@ def agregar_usuario():
 
 @app.route('/agregar_declaracion', methods=['GET', 'POST'])
 def agregar_declaracion():
-    # Lógica para manejar la adición de declaraciones
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        id_usuario = request.form['id_usuario']
+        ingresos_laborales = request.form['ingresos_laborales']
+        otros_ingresos = request.form['otros_ingresos']
+        retenciones = request.form['retenciones']
+        seguridad_social = request.form['seguridad_social']
+        aportes_pension = request.form['aportes_pension']
+        gastos_creditos_hipotecarios = request.form['gastos_creditos_hipotecarios']
+        donaciones = request.form['donaciones']
+        gastos_educacion = request.form['gastos_educacion']
+        
+        # Validar los datos (puedes agregar más validaciones según necesites)
+        if not all([id_usuario, ingresos_laborales, otros_ingresos, retenciones, seguridad_social, aportes_pension, gastos_creditos_hipotecarios, donaciones, gastos_educacion]):
+            flash('Todos los campos son obligatorios')
+            return redirect(url_for('agregar_declaracion'))
+        
+        # Conectar a la base de datos y agregar la declaración
+        conn = conectar_db()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                'INSERT INTO declaraciones (id_usuario, ingresos_laborales, otros_ingresos, retenciones, seguridad_social, aportes_pension, gastos_creditos_hipotecarios, donaciones, gastos_educacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (id_usuario, ingresos_laborales, otros_ingresos, retenciones, seguridad_social, aportes_pension, gastos_creditos_hipotecarios, donaciones, gastos_educacion)
+            )
+            conn.commit()
+            flash('Declaración agregada exitosamente')
+        except Exception as e:
+            conn.rollback()
+            flash('Error al agregar la declaración: ' + str(e))
+        finally:
+            conn.close()
+        
+        return redirect(url_for('index'))
+    
     return render_template('agregar_declaracion.html')
 
 @app.route('/consultar_usuario', methods=['GET', 'POST'])
